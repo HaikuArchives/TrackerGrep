@@ -1,0 +1,29 @@
+# Makefile for Tracker Grep
+
+NAME= Tracker\ Grep-G
+TYPE= APP
+SRCS= GrepApp.cpp GrepWindow.cpp Model.cpp TrackerGrep.cpp Grepper.cpp GrepListView.cpp
+RSRCS= TrackerGrep.rsrc
+LIBS= be tracker
+LIBPATHS= 
+SYSTEM_INCLUDE_PATHS = /boot/develop/headers/be/add-ons/tracker
+LOCAL_INCLUDE_PATHS = 
+OPTIMIZE= FULL
+DEFINES= 
+WARNINGS = ALL
+SYMBOLS = FALSE
+DEBUGGER = FALSE
+COMPILER_FLAGS =
+APP_VERSION = 
+DRIVER_PATH = 
+
+include $(BUILDHOME)/etc/makefile-engine
+
+install:
+	@cp -f $(OBJ_DIR)/$(NAME) /boot/home/config/add-ons/Tracker
+	@mimeset -f /boot/home/config/add-ons/Tracker/$(NAME)
+
+release:
+	@strip $(OBJ_DIR)/$(NAME)
+	@xres -o $(OBJ_DIR)/$(NAME) $(RSRCS)
+	@mimeset -f $(OBJ_DIR)/$(NAME)
