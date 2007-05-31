@@ -27,3 +27,11 @@ release:
 	@strip $(OBJ_DIR)/$(NAME)
 	@xres -o $(OBJ_DIR)/$(NAME) $(RSRCS)
 	@mimeset -f $(OBJ_DIR)/$(NAME)
+	@copyattr -d $(OBJ_DIR)/$(NAME) ../release
+	@copyattr -d ../documentation/readme.html ../release
+	@rm -f "../release/Drop Tracker Grep-G here to install"
+	@ln -s /boot/home/config/add-ons/Tracker ../release/Drop\ Tracker\ Grep-G\ here\ to\ install
+	@mkdir -p ../release/source
+	@copyattr -d * ../release/source
+	@rm -f ../release/source/$(OBJ_DIR)
+
