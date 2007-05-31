@@ -1119,7 +1119,8 @@ void GrepWindow::OnAboutRequested()
 				"Maintained by Jonas Sundström\n"
 				"jonas@kirilla.com\n\n"
 				"Thanks to Peter Hinely, Serge Fantino, "
-				"Hideki Naito, Oscar Lesta and Oliver Tappe.\n";
+				"Hideki Naito, Oscar Lesta, Oliver Tappe, "
+				"Luc Schrijvers and momoziro.\n";
 
 	(new BAlert(NULL, text.String(), "Okay", NULL, NULL,
 		B_WIDTH_AS_USUAL, B_INFO_ALERT))->Go(NULL);
