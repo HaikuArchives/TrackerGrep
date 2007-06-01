@@ -26,6 +26,7 @@
 #include <Looper.h>
 #include <String.h>
 #include <List.h>
+#include <Menu.h>
 #include <Message.h>
 #include <Entry.h>
 #include <FindDirectory.h>
