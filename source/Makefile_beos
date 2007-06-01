@@ -34,4 +34,5 @@ release:
 	@mkdir -p ../release/source
 	@copyattr -d * ../release/source
 	@rm -f ../release/source/$(OBJ_DIR)
+	@mimeset -f ../release/
 
