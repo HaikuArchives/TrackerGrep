@@ -223,11 +223,11 @@ IS_COMPONENT :=
 OPTIONAL := 
 
 #       Specify the names of the Language files here. (ie: AboutWindow.de AboutWindow.en) 
-LANG_FILES := 
+LANG_FILES := Tracker\ Grep-G.enUS Tracker\ Grep-G.nlBE
 
 #       If your language files are in a different directory, specify the relative directory here. 
 #       ie: Language/Dictionaries 
-LANG_FILES_DIR := 
+LANG_FILES_DIR := ../zeta_locales/Language/Dictionaries
 
 
 include /boot/develop/etc/makefile-engine
