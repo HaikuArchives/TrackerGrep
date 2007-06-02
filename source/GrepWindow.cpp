@@ -34,6 +34,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "TranslZeta.h"
 #include "Grepper.h"
 #include "GrepWindow.h"
 
@@ -307,67 +308,67 @@ void GrepWindow::CreateMenus()
 {
 	fMenuBar = new BMenuBar(BRect(0,0,1,1), "menubar");
 
-	fFileMenu = new BMenu("File");
-	fActionMenu = new BMenu("Actions");
-	fPreferencesMenu = new BMenu("Preferences");
-	fHistoryMenu = new BMenu("History");
+	fFileMenu = new BMenu(TranslZeta("File"));
+	fActionMenu = new BMenu(TranslZeta("Actions"));
+	fPreferencesMenu = new BMenu(TranslZeta("Preferences"));
+	fHistoryMenu = new BMenu(TranslZeta("History"));
 	
 	fNew = new BMenuItem(
-		"New Window", new BMessage(MSG_NEW_WINDOW), 'N');
+		TranslZeta("New Window"), new BMessage(MSG_NEW_WINDOW), 'N');
 		
 	fOpen = new BMenuItem(
-		"Set Which Files to Search", new BMessage(MSG_OPEN_PANEL), 'F');
+		TranslZeta("Set Which Files to Search"), new BMessage(MSG_OPEN_PANEL), 'F');
 
 	fClose = new BMenuItem(
-		"Close", new BMessage(B_QUIT_REQUESTED), 'W');
+		TranslZeta("Close"), new BMessage(B_QUIT_REQUESTED), 'W');
 	
 	fAbout = new BMenuItem(
-		"About", new BMessage(B_ABOUT_REQUESTED));
+		TranslZeta("About"), new BMessage(B_ABOUT_REQUESTED));
 
 	fQuit = new BMenuItem(
-		"Quit", new BMessage(MSG_QUIT_NOW), 'Q');
+		TranslZeta("Quit"), new BMessage(MSG_QUIT_NOW), 'Q');
 	
 	fSearch = new BMenuItem(
-		"Search", new BMessage(MSG_START_CANCEL), 'S');
+		TranslZeta("Search"), new BMessage(MSG_START_CANCEL), 'S');
 		
 	fSelectAll = new BMenuItem(
-		"Select All", new BMessage(MSG_SELECT_ALL), 'A');
+		TranslZeta("Select All"), new BMessage(MSG_SELECT_ALL), 'A');
 		
 	fTrimSelection = new BMenuItem(
-		"Trim to Selection", new BMessage(MSG_TRIM_SELECTION), 'T');
+		TranslZeta("Trim to Selection"), new BMessage(MSG_TRIM_SELECTION), 'T');
 		
 	fOpenSelection = new BMenuItem(
-		"Open Selection", new BMessage(MSG_OPEN_SELECTION), 'O');
+		TranslZeta("Open Selection"), new BMessage(MSG_OPEN_SELECTION), 'O');
 		
 	fSelectInTracker = new BMenuItem(
-		"Show Files in Tracker", new BMessage(MSG_SELECT_IN_TRACKER), 'K');
+		TranslZeta("Show Files in Tracker"), new BMessage(MSG_SELECT_IN_TRACKER), 'K');
 
 	fCopyText = new BMenuItem(
-		"Copy Text to Clipboard", new BMessage(MSG_COPY_TEXT), 'B');
+		TranslZeta("Copy Text to Clipboard"), new BMessage(MSG_COPY_TEXT), 'B');
 
 	fRecurseLinks = new BMenuItem(
-		"Follow symbolic links", new BMessage(MSG_RECURSE_LINKS));
+		TranslZeta("Follow symbolic links"), new BMessage(MSG_RECURSE_LINKS));
 
 	fRecurseDirs = new BMenuItem(
-		"Look in sub-directories", new BMessage(MSG_RECURSE_DIRS));
+		TranslZeta("Look in sub-directories"), new BMessage(MSG_RECURSE_DIRS));
 
 	fSkipDotDirs = new BMenuItem(
-		"Skip sub-directories starting with a dot", new BMessage(MSG_SKIP_DOT_DIRS));
+		TranslZeta("Skip sub-directories starting with a dot"), new BMessage(MSG_SKIP_DOT_DIRS));
 
 	fCaseSensitive = new BMenuItem(
-		"Case sensitive", new BMessage(MSG_CASE_SENSITIVE));
+		TranslZeta("Case sensitive"), new BMessage(MSG_CASE_SENSITIVE));
 
 	fEscapeText = new BMenuItem(
-		"Escape search text", new BMessage(MSG_ESCAPE_TEXT));
+		TranslZeta("Escape search text"), new BMessage(MSG_ESCAPE_TEXT));
 
 	fTextOnly = new BMenuItem(
-		"Text files only", new BMessage(MSG_TEXT_ONLY));
+		TranslZeta("Text files only"), new BMessage(MSG_TEXT_ONLY));
 
 	fInvokePe = new BMenuItem(
-		"Open files in Pe", new BMessage(MSG_INVOKE_PE));
+		TranslZeta("Open files in Pe"), new BMessage(MSG_INVOKE_PE));
 
 	fShowLinesMenuitem = new BMenuItem(
-		"Show Lines", new BMessage(MSG_MENU_SHOW_LINES), 'L');
+		TranslZeta("Show Lines"), new BMessage(MSG_MENU_SHOW_LINES), 'L');
 	fShowLinesMenuitem->SetMarked(true);
 		
 	fFileMenu->AddItem(fNew);
@@ -428,7 +429,7 @@ void GrepWindow::CreateViews()
 	fSearchText->SetModificationMessage(new BMessage(MSG_SEARCH_TEXT));
 
 	fButton = new BButton(
-		BRect(0, 1, 80, 1), "Button", "Search",
+		BRect(0, 1, 80, 1), "Button", TranslZeta("Search"),
 		new BMessage(MSG_START_CANCEL), B_FOLLOW_RIGHT);
 	
 	fButton->MakeDefault(true);
@@ -436,7 +437,7 @@ void GrepWindow::CreateViews()
 	fButton->SetEnabled(false);
 	
 	fShowLinesCheckbox = new BCheckBox(
-		BRect(0, 0, 1, 1), "ShowLines", "Show Lines",
+		BRect(0, 0, 1, 1), "ShowLines", TranslZeta("Show Lines"),
 		new BMessage(MSG_CHECKBOX_SHOW_LINES), B_FOLLOW_LEFT);
 	
 	fShowLinesCheckbox->SetValue(B_CONTROL_ON);
@@ -567,7 +568,7 @@ void GrepWindow::OnStartCancel()
 		fSearchText->SetEnabled(false);
 
 		fButton->MakeFocus(true);
-		fButton->SetLabel("Cancel");
+		fButton->SetLabel(TranslZeta("Cancel"));
 		fSearch->SetEnabled(false);
 
 		// We need to remember the search pattern, because during 
@@ -599,7 +600,7 @@ void GrepWindow::OnSearchFinished()
 	fPreferencesMenu->SetEnabled(true);
 	fHistoryMenu->SetEnabled(true);
 	
-	fButton->SetLabel("Search");
+	fButton->SetLabel(TranslZeta("Search"));
 	fButton->SetEnabled(true);
 	fSearch->SetEnabled(true);
 	
@@ -879,9 +880,9 @@ void GrepWindow::OnTrimSelection()
 {
 	if (fSearchResults->CurrentSelection() < 0) {
 		BAlert *alert = new BAlert(NULL,
-			"Please select the files you wish to keep searching. "
-			"The unselected files will be removed from the list.\n",
-			"Okay",	NULL, NULL, B_WIDTH_AS_USUAL, B_WARNING_ALERT);
+			TranslZeta("Please select the files you wish to keep searching. "
+			"The unselected files will be removed from the list.\n"),
+			TranslZeta("Okay"), NULL, NULL, B_WIDTH_AS_USUAL, B_WARNING_ALERT);
 		alert->Go(NULL);
 		return;
 	}
@@ -974,8 +975,8 @@ void GrepWindow::OnSelectInTracker()
 {
 	if (fSearchResults->CurrentSelection() < 0) {
 		BAlert *alert = new BAlert(NULL,
-			"Please select the files you wish to have selected for you in Tracker.",
-			"Okay",	NULL, NULL, B_WIDTH_AS_USUAL, B_WARNING_ALERT);
+			TranslZeta("Please select the files you wish to have selected for you in Tracker."),
+			TranslZeta("Okay"), NULL, NULL, B_WIDTH_AS_USUAL, B_WARNING_ALERT);
 		alert->Go(NULL);
 		return;
 	}
@@ -1037,8 +1038,8 @@ void GrepWindow::OnSelectInTracker()
 	
 	if (!AreAllFoldersOpenInTracker(&folderList)) {
 		BAlert *alert = new BAlert(NULL,
-			"Tracker Grep couldn't open one or more folders, and it's very sorry about it.",
-			"Forgive and forget!",	NULL, NULL, B_WIDTH_AS_USUAL, B_STOP_ALERT);
+			TranslZeta("Tracker Grep couldn't open one or more folders, and it's very sorry about it."),
+			TranslZeta("Forgive and forget!"), NULL, NULL, B_WIDTH_AS_USUAL, B_STOP_ALERT);
 		alert->Go(NULL);
 		return;
 	}
@@ -1113,16 +1114,16 @@ void GrepWindow::OnAboutRequested()
 
 	BString text 
 		= BString("Tracker Grep ") << fAppVersion
-			<< "\nHow to use grep from Tracker.\n\n"
+			<< TranslZeta("\nHow to use grep from Tracker.\n\n"
 				"Created by Matthijs Hollemans\n"
 				"mahlzeit@users.sf.net\n\n"
 				"Maintained by Jonas Sundström\n"
 				"jonas@kirilla.com\n\n"
 				"Thanks to Peter Hinely, Serge Fantino, "
 				"Hideki Naito, Oscar Lesta, Oliver Tappe, "
-				"Luc Schrijvers and momoziro.\n";
+				"Luc Schrijvers and momoziro.\n");
 
-	(new BAlert(NULL, text.String(), "Okay", NULL, NULL,
+	(new BAlert(NULL, text.String(), TranslZeta("Okay"), NULL, NULL,
 		B_WIDTH_AS_USUAL, B_INFO_ALERT))->Go(NULL);
 }
 
