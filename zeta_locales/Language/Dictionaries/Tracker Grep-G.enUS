@@ -1,3 +1,4 @@
+#GrepWindow
 "File"
 "Actions"
 "Preferences"
@@ -21,10 +22,17 @@
 "Open files in Pe"
 "Show Lines"
 "Search"
-
-"Please select the files you wish to keep searching.\nThe unselected files will be removed from the list.\n"
-"Okay"							"Ok"
+"Cancel"
+"Okay"
+"Please select the files you wish to keep searching."
+"The unselected files will be removed from the list."
 "Please select the files you wish to have selected for you in Tracker."
-"Okay"							"Ok"
-
-"\nHow to use grep from Tracker.\n\nCreated by Matthijs Hollemans\nmahlzeit@users.sf.net\n\nMaintained by Jonas Sundström\njonas@kirilla.com\n\nThanks to Peter Hinely, Serge Fantino, Hideki Naito, Oscar Lesta and Oliver Tappe.\n"
+"Tracker Grep couldn't open one or more folders, and it's very sorry about it."
+"Forgive and forget!"
+"Get a grip on grep."
+"Tracker Grep lets you search the contents of your files."
+"It is primarily intended for use with text files."
+"Created by Matthijs Hollemans"
+"Maintained by Jonas Sundström"
+"Contributed to by: "
+"Peter Hinely, Serge Fantino, Hideki Naito, Oscar Lesta, Oliver Tappe, Luc Schrijvers and momoziro."
