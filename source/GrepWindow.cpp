@@ -879,10 +879,11 @@ void GrepWindow::OnHistoryItem(BMessage *message)
 void GrepWindow::OnTrimSelection()
 {
 	if (fSearchResults->CurrentSelection() < 0) {
-		BAlert *alert = new BAlert(NULL,
-			TranslZeta("Please select the files you wish to keep searching. "
-			"The unselected files will be removed from the list.\n"),
-			TranslZeta("Okay"), NULL, NULL, B_WIDTH_AS_USUAL, B_WARNING_ALERT);
+		BString text;
+		text << TranslZeta("Please select the files you wish to keep searching.") << "\n";
+		text << TranslZeta("The unselected files will be removed from the list.") << "\n";
+		BAlert *alert = new BAlert(NULL, text.String(), TranslZeta("Okay"), NULL, NULL,
+			B_WIDTH_AS_USUAL, B_WARNING_ALERT);
 		alert->Go(NULL);
 		return;
 	}
@@ -1112,19 +1113,31 @@ void GrepWindow::OnAboutRequested()
 		be_app->Unlock();
 	}
 
-	BString text 
-		= BString("Tracker Grep ") << fAppVersion
-			<< TranslZeta("\nHow to use grep from Tracker.\n\n"
-				"Created by Matthijs Hollemans\n"
-				"mahlzeit@users.sf.net\n\n"
-				"Maintained by Jonas Sundström\n"
-				"jonas@kirilla.com\n\n"
-				"Thanks to Peter Hinely, Serge Fantino, "
-				"Hideki Naito, Oscar Lesta, Oliver Tappe, "
-				"Luc Schrijvers and momoziro.\n");
-
-	(new BAlert(NULL, text.String(), TranslZeta("Okay"), NULL, NULL,
-		B_WIDTH_AS_USUAL, B_INFO_ALERT))->Go(NULL);
+	BString text; 
+	text << "Tracker Grep" << " " << fAppVersion << "\n";
+	text << TranslZeta("Get a grip on grep.") << "\n\n";
+	text << TranslZeta("Tracker Grep lets you search the contents of your files.") << " ";
+	text << TranslZeta("It is primarily intended for use with text files.") << "\n\n";
+	text << TranslZeta("Created by Matthijs Hollemans") << "\n";
+	text << "mahlzeit@users.sf.net" << "\n\n";
+	text << TranslZeta("Maintained by Jonas Sundström") << "\n";
+	text << "jonas@kirilla.com" << "\n\n";
+	text << TranslZeta("Contributed to by: ");
+	text << TranslZeta("Peter Hinely, Serge Fantino, Hideki Naito, Oscar Lesta, Oliver Tappe, Luc Schrijvers and momoziro.");
+	text << "\n";
+	
+	BAlert *alert = new BAlert("Tracker Grep", text.String(), TranslZeta("Okay"), NULL, NULL,
+		B_WIDTH_AS_USUAL, B_INFO_ALERT);
+	
+	BTextView *view = alert->TextView();
+	BFont font;
+	view->SetStylable(true);
+	view->GetFont(&font);
+	font.SetSize(font.Size() * 1.5);
+	font.SetFace(B_BOLD_FACE);
+	view->SetFontAndColor(0, 16, &font);
+	
+	alert->Go(NULL);
 }
 
 
