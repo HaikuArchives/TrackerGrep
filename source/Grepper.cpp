@@ -24,12 +24,47 @@
 #include <List.h>
 #include <NodeInfo.h>
 #include <Path.h>
+#include <UTF8.h>
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "Grepper.h"
+
+
+char *strdup_to_utf8(uint32 encode, const char *src, int32 length)
+{
+	int32 srcLen = length;
+	int32 dstLen = srcLen + srcLen;
+	char *dst = new char[dstLen+1];
+	int32 cookie = 0;
+	convert_to_utf8(encode, src, &srcLen, dst, &dstLen, &cookie);
+	dst[dstLen] = '\0';
+	char *dup = strdup(dst);
+	delete[] dst;
+	if (srcLen != length)
+		fprintf(stderr, "strdup_to_utf8(%ld, %ld) dst allocate smoalled(%ld)\n",
+						encode, length, dstLen);
+	return dup;
+}
+
+
+char *strdup_from_utf8(uint32 encode, const char *src, int32 length)
+{
+	int32 srcLen = length;
+	int32 dstLen = srcLen;
+	char *dst = new char[dstLen+1];
+	int32 cookie = 0;
+	convert_from_utf8(encode, src, &srcLen, dst, &dstLen, &cookie);
+	dst[dstLen] = '\0';
+	char *dup = strdup(dst);
+	delete[] dst;
+	if (srcLen != length)
+		fprintf(stderr, "strdup_from_utf8(%ld, %ld) dst allocate smoalled(%ld)\n",
+						encode, length, dstLen);
+	return dup;
+}
 
 
 Grepper::Grepper(const char *pattern, Model *model) 
@@ -40,7 +75,13 @@ Grepper::Grepper(const char *pattern, Model *model)
 	fMustQuit = false;
 	fCurrentRef = 0;
 
-	SetPattern(pattern);
+	if (fModel->fEncoding) {
+		char *src = strdup_from_utf8(fModel->fEncoding, pattern, strlen(pattern));
+		SetPattern(src);
+		free(src);
+	}
+	else
+		SetPattern(pattern);
 
 	fCurrentDir = new BDirectory(&fModel->fDirectory);
 	fCurrentDir->Rewind();
@@ -130,8 +171,17 @@ int32 Grepper::GrepperThread()
 
 			if (results != NULL) {
 				while (fgets(tempString, B_PATH_NAME_LENGTH, results) != 0)
-					message.AddString("text", tempString);
-		
+				{
+					if (fModel->fEncoding) {
+						char *tempdup = strdup_to_utf8(fModel->fEncoding, 
+							tempString, strlen(tempString));
+						message.AddString("text", tempdup);
+						free(tempdup);
+					}
+					else
+						message.AddString("text", tempString);
+				}
+				
 				if (message.HasString("text"))
 					fModel->fTarget->PostMessage(&message);
 
@@ -205,7 +255,7 @@ void Grepper::SetPattern(const char *src)
 		}
 
 		*dstPtr++ = '"';
-		*dstPtr = '\0';		
+		*dstPtr = '\0';
 	} else
 		fPattern = strdup(src);
 }
@@ -365,3 +415,4 @@ bool Grepper::ExamineFile(BEntry &entry, char *buffer)
 
 	return false;
 }
+

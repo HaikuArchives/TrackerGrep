@@ -60,6 +60,8 @@ Model::Model()
 		fFilePanelPath = path.Path();
 	else
 		fFilePanelPath = "/boot/home";
+	
+	fEncoding = 0;
 }
 
 
@@ -111,6 +113,9 @@ status_t Model::LoadPrefs()
 	
 	file.ReadAttr("WindowFrame", B_RECT_TYPE, 0, &fFrame, sizeof(BRect));
 
+	if (file.ReadAttr("Encoding", B_INT32_TYPE, 0, &value, sizeof(int32)) > 0)
+		fEncoding = value;
+
 	file.Unlock();
 	
 	return B_OK;
@@ -160,6 +165,8 @@ status_t Model::SavePrefs()
 	file.WriteAttr("WindowFrame", B_RECT_TYPE, 0, &fFrame, sizeof(BRect));
 	
 	file.WriteAttr("FilePanelPath", B_STRING_TYPE, 0, fFilePanelPath.String(), fFilePanelPath.Length()+1);
+
+	file.WriteAttr("Encoding", B_INT32_TYPE, 0, &fEncoding, sizeof(int32));
 
 	file.Sync();
 	file.Unlock();

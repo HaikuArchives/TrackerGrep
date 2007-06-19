@@ -131,7 +131,10 @@ class Model {
 		
 		// Current directory of the filepanel
 		BString fFilePanelPath;
-	
+		
+		// Grep string encoding ?
+		uint32 fEncoding;
+		
 	private:
 		BList *LoadHistory();
 		status_t SaveHistory(BList *items);

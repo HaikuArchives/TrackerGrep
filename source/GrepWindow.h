@@ -118,6 +118,11 @@ class GrepWindow : public BWindow {
 		BMenuItem *fInvokePe;
 		BMenuItem *fShowLinesMenuitem;
 		BMenu *fHistoryMenu;
+		BMenu *fEncodingMenu;
+		BMenuItem *fUTF8;
+		BMenuItem *fShiftJIS;
+		BMenuItem *fEUC;
+		BMenuItem *fJIS;
 		
 		BCheckBox *fShowLinesCheckbox;
 		BButton *fButton;

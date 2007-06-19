@@ -26,6 +26,7 @@
 #include <Path.h>
 #include <Roster.h>
 #include <String.h>
+#include <UTF8.h>
 
 #include <ctype.h>
 #include <stdio.h>
@@ -55,7 +56,43 @@ class ResultItem : public BStringItem {
 
 
 GrepWindow::GrepWindow(BMessage *message)
-	: BWindow(BRect(0, 0, 1, 1), NULL, B_DOCUMENT_WINDOW, 0)
+	: BWindow(BRect(0, 0, 1, 1), NULL, B_DOCUMENT_WINDOW, 0),
+	fSearchText(NULL),
+	fSearchResults(NULL),
+	fMenuBar(NULL),
+	fFileMenu(NULL),
+	fNew(NULL),
+	fOpen(NULL),
+	fClose(NULL),
+	fAbout(NULL),
+	fQuit(NULL),
+	fActionMenu(NULL),
+	fSelectAll(NULL),
+	fSearch(NULL),
+	fTrimSelection(NULL),
+	fCopyText(NULL),
+	fSelectInTracker(NULL),
+	fOpenSelection(NULL),
+	fPreferencesMenu(NULL),
+	fRecurseLinks(NULL),
+	fRecurseDirs(NULL),
+	fSkipDotDirs(NULL),
+	fCaseSensitive(NULL),
+	fEscapeText(NULL),
+	fTextOnly(NULL),
+	fInvokePe(NULL),
+	fShowLinesMenuitem(NULL),
+	fHistoryMenu(NULL),
+	fEncodingMenu(NULL),
+	fUTF8(NULL),
+	fShiftJIS(NULL),
+	fEUC(NULL),
+	fJIS(NULL),
+	fShowLinesCheckbox(NULL),
+	fButton(NULL),
+	fGrepper(NULL),
+	fModel(NULL),
+	fFilePanel(NULL)
 {
 	entry_ref directory;
 	InitRefsReceived(&directory, message);
@@ -267,7 +304,23 @@ void GrepWindow::MessageReceived(BMessage *message)
 		case MSG_QUIT_NOW:
 			OnQuitNow();
 			break;
+		
+		case 'utf8':
+			fModel->fEncoding = 0;
+			break;
 			
+		case B_SJIS_CONVERSION:
+			fModel->fEncoding = B_SJIS_CONVERSION;
+			break;
+			
+		case B_EUC_CONVERSION:
+			fModel->fEncoding = B_EUC_CONVERSION;
+			break;
+			
+		case B_JIS_CONVERSION:
+			fModel->fEncoding = B_JIS_CONVERSION;
+			break;
+		
 		default:
 			BWindow::MessageReceived(message);
 			break;
@@ -312,6 +365,7 @@ void GrepWindow::CreateMenus()
 	fActionMenu = new BMenu(TranslZeta("Actions"));
 	fPreferencesMenu = new BMenu(TranslZeta("Preferences"));
 	fHistoryMenu = new BMenu(TranslZeta("History"));
+	fEncodingMenu = new BMenu(TranslZeta("Encoding"));
 	
 	fNew = new BMenuItem(
 		TranslZeta("New Window"), new BMessage(MSG_NEW_WINDOW), 'N');
@@ -370,7 +424,12 @@ void GrepWindow::CreateMenus()
 	fShowLinesMenuitem = new BMenuItem(
 		TranslZeta("Show Lines"), new BMessage(MSG_MENU_SHOW_LINES), 'L');
 	fShowLinesMenuitem->SetMarked(true);
-		
+	
+	fUTF8 = new BMenuItem("UTF8", new BMessage('utf8'));
+	fShiftJIS = new BMenuItem("ShiftJIS", new BMessage(B_SJIS_CONVERSION));
+	fEUC = new BMenuItem("EUC", new BMessage(B_EUC_CONVERSION));
+	fJIS = new BMenuItem("JIS", new BMessage(B_JIS_CONVERSION));
+	
 	fFileMenu->AddItem(fNew);
 	fFileMenu->AddSeparatorItem();
 	fFileMenu->AddItem(fOpen);
@@ -399,10 +458,21 @@ void GrepWindow::CreateMenus()
 	fPreferencesMenu->AddSeparatorItem();
 	fPreferencesMenu->AddItem(fShowLinesMenuitem);
 	
+ 	fEncodingMenu->AddItem(fUTF8);
+ 	fEncodingMenu->AddItem(fShiftJIS);
+ 	fEncodingMenu->AddItem(fEUC);
+ 	fEncodingMenu->AddItem(fJIS);
+
+//	fEncodingMenu->SetLabelFromMarked(true);
+		// Do we really want this ?
+	fEncodingMenu->SetRadioMode(true);
+	fEncodingMenu->ItemAt(0)->SetMarked(true);
+
 	fMenuBar->AddItem(fFileMenu);
 	fMenuBar->AddItem(fActionMenu);
 	fMenuBar->AddItem(fPreferencesMenu);
 	fMenuBar->AddItem(fHistoryMenu);
+	fMenuBar->AddItem(fEncodingMenu);
 	
 	AddChild(fMenuBar);
 	SetKeyMenuBar(fMenuBar);
@@ -529,6 +599,25 @@ void GrepWindow::LoadPrefs()
 	fShowLinesMenuitem->SetMarked(
 		fModel->fShowContents ? true : false);
 
+	switch (fModel->fEncoding)
+	{
+		case 0:
+			fUTF8->SetMarked(true);
+			break;
+		case B_SJIS_CONVERSION:
+			fShiftJIS->SetMarked(true);
+			break;
+		case B_EUC_CONVERSION:
+			fEUC->SetMarked(true);
+			break;
+		case B_JIS_CONVERSION:
+			fJIS->SetMarked(true);
+			break;
+		default:
+			printf("Woops. Bad fModel->fEncoding value.\n");
+			break;
+	}
+
 	MoveTo(fModel->fFrame.left, fModel->fFrame.top);
 	ResizeTo(fModel->fFrame.Width(), fModel->fFrame.Height());
 
@@ -564,6 +653,7 @@ void GrepWindow::OnStartCancel()
 		fActionMenu->SetEnabled(false);
 		fPreferencesMenu->SetEnabled(false);
 		fHistoryMenu->SetEnabled(false);
+		fEncodingMenu->SetEnabled(false);
 		
 		fSearchText->SetEnabled(false);
 
@@ -599,6 +689,7 @@ void GrepWindow::OnSearchFinished()
 	fActionMenu->SetEnabled(true);
 	fPreferencesMenu->SetEnabled(true);
 	fHistoryMenu->SetEnabled(true);
+	fEncodingMenu->SetEnabled(true);
 	
 	fButton->SetLabel(TranslZeta("Search"));
 	fButton->SetEnabled(true);
