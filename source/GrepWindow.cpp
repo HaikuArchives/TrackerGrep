@@ -1214,7 +1214,7 @@ void GrepWindow::OnAboutRequested()
 	text << TranslZeta("Maintained by Jonas Sundström") << "\n";
 	text << "jonas@kirilla.com" << "\n\n";
 	text << TranslZeta("Contributed to by: ");
-	text << TranslZeta("Peter Hinely, Serge Fantino, Hideki Naito, Oscar Lesta, Oliver Tappe, Luc Schrijvers and momoziro.");
+	text << TranslZeta("Peter Hinely, Serge Fantino, Hideki Naito, Oscar Lesta, Oliver Tappe, Luc Schrijvers and Rihatsu-san.");
 	text << "\n";
 	
 	BAlert *alert = new BAlert("Tracker Grep", text.String(), TranslZeta("Okay"), NULL, NULL,

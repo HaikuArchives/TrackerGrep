@@ -5,15 +5,15 @@
  *
  */
 
-#ifndef __LOCALIZATION_H__
-#define __LOCALIZATION_H__
+#ifndef __TRANSL_ZETA_H__
+#define __TRANSL_ZETA_H__
 
-#ifdef ZETA_OS
-	#include <Locale.h>
+#ifdef B_ZETA_VERSION
+	#include <locale/Locale.h>
     #define TranslZeta(x) _T(x)
 #else
     #define TranslZeta(x) x
 #endif
 
-#endif // __LOCALIZATION_H__
+#endif // __TRANSL_ZETA_H__
 
