@@ -147,7 +147,7 @@ TARGET_DIR := .
 CHATTY := 
 
 #       Special Zeta build system var 
-BOOTREL_INSTALL_DIR := 
+BOOTREL_INSTALL_DIR := apps/Tools/Tracker\ Grep-G
 
 #       Specify a directory for the 'install' target. 
 INSTALL_DIR := /boot/$(BOOTREL_INSTALL_DIR)
@@ -164,7 +164,7 @@ MENU_LINKS := TRUE
 #       Related to MENU_LINKS, specify the name of the direcotry in the BeMenu 
 #       you wish the link to go in. If the directory does not exist, it will be 
 #       created. 
-APP_MENU := Software/
+APP_MENU := Software/Tools
 
 #       If, for some reason, you don't want to use the dependencies (flex and yacc seem to choke 
 #       on them), set this to false 
@@ -172,7 +172,7 @@ DODEPS :=
 
 #	Set this variable if you have an svg text file you wish to use as 
 #   your target's icon.
-SVG_ICON := 
+SVG_ICON := /boot/beos/etc/icons/svg/find.svg
 
 #	If you have some fancy custom build steps to do, specify them here
 EXTRA_BUILD_STEPS := 
@@ -203,7 +203,7 @@ SRC_LIBS_STATIC :=
 SCREENSHOT := 
 
 #       Specify the category that this zeta component belongs in 
-ZETA_CATEGORY := 
+ZETA_CATEGORY := Tools
 
 #       The .zip package that this file will be included in. If this is left blank, then 
 #       $(NAME).zip will be used. 
@@ -223,11 +223,11 @@ IS_COMPONENT :=
 OPTIONAL := 
 
 #       Specify the names of the Language files here. (ie: AboutWindow.de AboutWindow.en) 
-LANG_FILES := Tracker\ Grep-G.enUS Tracker\ Grep-G.nlBE
+LANG_FILES := 
 
 #       If your language files are in a different directory, specify the relative directory here. 
 #       ie: Language/Dictionaries 
-LANG_FILES_DIR := ../zeta_locales/Language/Dictionaries
+LANG_FILES_DIR := 
 
 
 include /boot/develop/etc/makefile-engine
