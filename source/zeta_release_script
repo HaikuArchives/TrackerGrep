@@ -1,0 +1,14 @@
+#!/bin/sh
+cd $(dirname "$0")
+
+xres -o Tracker\ Grep-G TrackerGrep.rsrc
+mimeset -f Tracker\ Grep-G
+
+mkdir -p ../release
+copyattr -d Tracker\ Grep-G ../release/
+copyattr -d ../documentation/readme.html ../release/
+copyattr -d -r ../zeta_locales/Language ../release/
+copyattr -d zeta_install_script ../release/Run\ This\ To\ Install\ Tracker\ Grep
+chmod u+x ../release/Run\ This\ To\ Install\ Tracker\ Grep
+rm -rf ../release/Language/.svn
+rm -rf ../release/Language/Dictionaries/.svn
