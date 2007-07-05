@@ -1,5 +1,5 @@
 #!/bin/sh
-cd $(dirname "$0")
+cd "$(dirname "$0")"
 
 xres -o Tracker\ Grep-G TrackerGrep.rsrc
 mimeset -f Tracker\ Grep-G
