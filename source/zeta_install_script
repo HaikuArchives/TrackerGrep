@@ -1,19 +1,39 @@
 #!/bin/sh
 
-# change directory to wherever the script is run from
-cd "$(dirname "$0")"
+alert=$(alert --warning "Would you like to have Tracker Grep installed?" No Yes)
+if [ "$alert" = "Yes" ] ; then
 
-# where to install
-target_folder=/boot/apps/Tools/Tracker\ Grep/
+	# change directory to wherever the script is run from
+	cd "$(dirname "$0")"
+	
+	# where to install
+	target_folder=/boot/apps/Tools/Tracker\ Grep/
+	
+	# create app folder
+	mkdir -p "$target_folder"
+	
+	# copy everything in place
+	copyattr -d -r * "$target_folder"
+	
+	# remove installer
+	rm "$target_folder/""$(basename "$0")"
+	
+	# softlink from Tracker's add-on folder to the executable
+	ln -s -f "$target_folder"Tracker\ Grep-G ~/config/add-ons/Tracker/
+	
+	# post-install checkup
+	if [ ! -e "$target_folder" ]; then
+		action=$(alert --stop "Install failed!" "Close")
+	fi
+	
+	if [ ! -e "$target_folder/Tracker Grep-G" ]; then
+		action=$(alert --stop "Install failed!" "Close")
+	fi
+	
+	if [ ! -e "/boot/home/config/add-ons/Tracker/Tracker Grep-G" ]; then
+		action=$(alert --stop "Install failed!" "Close")
+	fi
 
-# create app folder
-mkdir -p "$target_folder"
+	alert "Tracker Grep is now installed and ready to be used." Close
 
-# copy everything in place
-copyattr -d -r * "$target_folder"
-
-# remove installer
-rm "$target_folder/""$(basename "$0")"
-
-# softlink from Tracker's add-on folder to the executable
-ln -s -f "$target_folder"Tracker\ Grep-G ~/config/add-ons/Tracker/
+fi
