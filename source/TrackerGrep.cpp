@@ -20,7 +20,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-#include <TrackerAddon.h>
+#include <TrackerAddOn.h>
 #include <AppFileInfo.h>
 #include <Roster.h>
 #include <Entry.h>
