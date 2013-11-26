@@ -23,6 +23,7 @@
 #include <Application.h>
 #include <AppFileInfo.h>
 #include <Alert.h>
+#include <Clipboard.h>
 #include <Path.h>
 #include <Roster.h>
 #include <String.h>
