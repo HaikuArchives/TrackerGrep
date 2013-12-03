@@ -30,6 +30,7 @@
 #include <Message.h>
 #include <Entry.h>
 #include <FindDirectory.h>
+#include <File.h>
 #include <Rect.h>
 
 #define PREFS_FILE    "TrackerGrepSettings"

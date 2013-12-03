@@ -139,8 +139,10 @@ int32 Grepper::GrepperThread()
 	char command[B_PATH_NAME_LENGTH + 32];
 
 	BPath tempFile;
-	sprintf(fileName, "/boot/var/tmp/TrackerGrep%ld", fThreadId);
-	tempFile.SetTo(fileName);
+	if (find_directory(B_SYSTEM_TEMP_DIRECTORY, &tempFile, true) != B_OK)
+		return -1;
+	sprintf(fileName, "TrackerGrep%ld", fThreadId);
+	tempFile.Append(fileName);
 
 	while (!fMustQuit && GetNextName(fileName)) {
 		message.MakeEmpty();
@@ -159,8 +161,9 @@ int32 Grepper::GrepperThread()
 
 		EscapeSpecialChars(fileName);
 
+		//assume that grep is already in $PATH
 		sprintf(
-			command, "/boot/beos/bin/grep -hn %s %s \"%s\" > \"%s\"",
+			command, "grep -hn %s %s \"%s\" > \"%s\"",
 			fModel->fCaseSensitive ? "" : "-i", fPattern, fileName, 
 			tempFile.Path());
 
