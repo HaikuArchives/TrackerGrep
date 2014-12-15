@@ -32,11 +32,11 @@ SRCS = GrepApp.cpp GrepListView.cpp Grepper.cpp GrepWindow.cpp Model.cpp Tracker
 
 #	Specify the resource definition files to use. Full or relative paths can be
 #	used.
-RDEFS = 
+RDEFS = TrackerGrep.rdef
 
 #	Specify the resource files to use. Full or relative paths can be used.
 #	Both RDEFS and RSRCS can be utilized in the same Makefile.
-RSRCS = TrackerGrep.rsrc
+RSRCS = 
 
 # End Pe/Eddie support.
 # @<-src@ 
