@@ -292,8 +292,8 @@ void Model::FreeHistory(BList *items)
 }
 
 
-status_t Model::OpenFile(BFile *file, char *name, uint32 openMode = B_READ_ONLY, 
-	directory_which which = B_USER_SETTINGS_DIRECTORY, BVolume *volume = NULL)
+status_t Model::OpenFile(BFile *file, char *name, uint32 openMode, 
+	directory_which which, BVolume *volume)
 {
 	if (file == NULL)
 		return B_ERROR;
